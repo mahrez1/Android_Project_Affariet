@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_baseline_terrain_24"
+            android:title="POSTULER" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_baseline_attach_money_24"
+            android:title="ACHETER" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_baseline_maps_home_work_24"
+            android:title="ALLOUER" />
+
+        <item
+            android:id="@+id/message"
+            android:icon="@drawable/ic_baseline_message_24"
+            android:title="MESSAGERIE" />
+
+        <item
+            android:id="@+id/pannier"
+            android:icon="@drawable/ic_baseline_home_repair_service_24"
+            android:title="PANNIER" />
+
+        <item
+            android:id="@+id/connection"
+            android:icon="@drawable/ic_baseline_https_24"
+            android:title="DECONNECTER" />
+
+
+    </group>
+</menu>

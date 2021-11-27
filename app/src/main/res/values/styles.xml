@@ -1,0 +1,20 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/a</item>
+        <item name="colorPrimaryDark">@color/a</item>
+        <item name="colorAccent">@color/a</item>
+
+
+        <item name="colorSecondaryVariant">@color/teal_200</item>
+
+    </style>
+    <declare-styleable name="BgColor" >
+        <attr name="backgroundColor" format="color" />
+        <attr name="itemFillColor" format="color" />
+        <attr name="rotate" format="boolean" />
+    </declare-styleable>
+
+</resources>
