@@ -9,6 +9,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import android.content.SharedPreferences
+import android.view.View
+import android.view.WindowManager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import com.google.android.material.progressindicator.CircularProgressIndicator
+
+import tn.esprit.mylast.models.User
+import tn.esprit.mylast.utils.ApiInterface
 
 const val PREF_NAME = "LOGIN_PREF_AFFARIET"
 class RegisterActivity : AppCompatActivity() {
@@ -72,6 +81,7 @@ class RegisterActivity : AppCompatActivity() {
                 editor.putString("Password" , password)
                 editor.apply()
                 Toast.makeText(this, "Information is saved", Toast.LENGTH_SHORT).show()
+                doRegister()
                 startActivity(Intent(this, LoginActivity::class.java))
                 /*val intent = Intent(this, ProfileActivity::class.java )
                 startActivity(intent)
@@ -95,6 +105,50 @@ class RegisterActivity : AppCompatActivity() {
         }
 
 }
+
+
+    private fun doRegister(){
+
+            val apiInterface = ApiInterface.create()
+
+
+            apiInterface.register(username_et.text.toString().trim(),email_et.text.toString().trim() ,password_et.text.toString().trim()).enqueue(object :
+                Callback<User> {
+
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+
+                    val user = response.body()
+
+                    if (user == null){
+                        Toast.makeText(this@RegisterActivity, "Registration Success", Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(this@RegisterActivity, "User already has an account", Toast.LENGTH_SHORT).show()
+                    }
+
+
+                }
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    Toast.makeText(this@RegisterActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
+
+
+                }
+
+            })
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
 /*   val name = username_et.text.toString()
 

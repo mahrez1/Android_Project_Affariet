@@ -1,18 +1,18 @@
 package tn.esprit.mylast.dao
 
-import tn.esprit.mylast.data.User
+import tn.esprit.mylast.data.UserLocal
 import androidx.room.*
 @Dao
 interface UserDAO {
     @Insert
-    fun insert(educ: User)
+    fun insert(educ: UserLocal)
 
     @Update
-    fun update(educ: User)
+    fun update(educ: UserLocal)
 
     @Delete
-    fun delete(educ: User)
+    fun delete(educ: UserLocal)
 
     @Query("SELECT * FROM user")
-    fun getAllChamps(): List<User>
+    fun getAllChamps(): List<UserLocal>
 }

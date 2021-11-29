@@ -3,7 +3,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 @Entity(tableName = "user")
-data class User(
+data class UserLocal(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "Pic")

@@ -1,5 +1,6 @@
 package tn.esprit.mylast
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +15,13 @@ import android.view.inputmethod.InputBinding
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import tn.esprit.mylast.MainActivity
+import tn.esprit.mylast.models.User
+import tn.esprit.mylast.utils.ApiInterface
+
 class LoginActivity : AppCompatActivity() {
     private lateinit var Button : Button
     private lateinit var email_et :EditText
@@ -55,7 +62,9 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show()
             }
 
-            else{   startActivity(Intent(this, MainActivity::class.java))}
+            else{
+                dologin()
+            }
 
         }
 
@@ -67,6 +76,44 @@ class LoginActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
         }
     }
+
+
+    private fun dologin(){
+
+        val apiInterface = ApiInterface.create()
+
+
+        apiInterface.login(email_et.text.toString().trim() ,password_et.text.toString().trim()).enqueue(object :
+            Callback<User> {
+
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+
+                val user = response.body()
+
+                if (user != null){
+                    Toast.makeText(this@LoginActivity, "Login Success", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+
+                }else{
+                    Toast.makeText(this@LoginActivity, "User not found", Toast.LENGTH_SHORT).show()
+                }
+
+
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Toast.makeText(this@LoginActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
+
+
+            }
+
+        })
+
+
+    }
+
+
+
 
 
 }
