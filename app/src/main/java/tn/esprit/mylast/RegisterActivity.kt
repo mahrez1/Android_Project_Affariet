@@ -9,15 +9,22 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import android.content.SharedPreferences
+import android.graphics.Insets.add
 import android.view.View
 import android.view.WindowManager
+import androidx.core.graphics.Insets.add
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.internal.util.BackpressureHelper.add
+import io.reactivex.schedulers.Schedulers
 
 import tn.esprit.mylast.models.User
 import tn.esprit.mylast.utils.ApiInterface
+import tn.esprit.mylast.utils.RetrofitClient
 
 const val PREF_NAME = "LOGIN_PREF_AFFARIET"
 class RegisterActivity : AppCompatActivity() {
@@ -27,6 +34,15 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var password_et :EditText
     private lateinit var email_et :EditText
     lateinit  var mSharedPref  : SharedPreferences
+   // lateinit  var iMyService  : ApiInterface
+   // internal var compositeDisposable = CompositeDisposable()
+    /*override fun onStop()
+    {
+        compositeDisposable.clear()
+        super.onStop()
+    }*/
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +98,7 @@ class RegisterActivity : AppCompatActivity() {
                 editor.apply()
                 Toast.makeText(this, "Information is saved", Toast.LENGTH_SHORT).show()
                 doRegister()
-                startActivity(Intent(this, LoginActivity::class.java))
+
                 /*val intent = Intent(this, ProfileActivity::class.java )
                 startActivity(intent)
                 finish()*/
@@ -105,39 +121,54 @@ class RegisterActivity : AppCompatActivity() {
         }
 
 }
-
-
-    private fun doRegister(){
-
-            val apiInterface = ApiInterface.create()
-
-
-            apiInterface.register(username_et.text.toString().trim(),email_et.text.toString().trim() ,password_et.text.toString().trim()).enqueue(object :
-                Callback<User> {
-
-                override fun onResponse(call: Call<User>, response: Response<User>) {
-
-                    val user = response.body()
-
-                    if (user == null){
-                        Toast.makeText(this@RegisterActivity, "Registration Success", Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(this@RegisterActivity, "User already has an account", Toast.LENGTH_SHORT).show()
-                    }
-
-
-                }
-
-                override fun onFailure(call: Call<User>, t: Throwable) {
-                    Toast.makeText(this@RegisterActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
-
-
-                }
-
-            })
-
+ /*   private fun doRegister()
+    {
+        val retrofit = RetrofitClient.getInstance()
+        iMyService = retrofit.create(ApiInterface::class.java)
+        register(username_et.text.toString(),email_et.text.toString() ,password_et.text.toString())
 
     }
+
+    private fun register(name: String, email: String, password: String) {
+        compositeDisposable.add(iMyService.register(name,email,password)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe{ result -> Toast.makeText(this@RegisterActivity,""+result,Toast.LENGTH_SHORT).show() } )
+
+}*/
+
+ private fun doRegister(){
+
+         val apiInterface = ApiInterface.create()
+
+
+         apiInterface.register(username_et.text.toString().trim(),email_et.text.toString().trim() ,password_et.text.toString().trim()).enqueue(object :
+             Callback<User> {
+
+             override fun onResponse(call: Call<User>, response: Response<User>) {
+
+                 val user = response.body()
+
+                 if (user == null){
+                     Toast.makeText(this@RegisterActivity, "Registration Success", Toast.LENGTH_SHORT).show()
+                     startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                 }else{
+                     Toast.makeText(this@RegisterActivity, "User already has an account", Toast.LENGTH_SHORT).show()
+                 }
+
+
+             }
+
+             override fun onFailure(call: Call<User>, t: Throwable) {
+                 Toast.makeText(this@RegisterActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
+
+
+             }
+
+         })
+
+
+ }
 
 
 

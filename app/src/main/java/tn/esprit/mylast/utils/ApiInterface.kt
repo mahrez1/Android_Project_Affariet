@@ -1,18 +1,29 @@
 package tn.esprit.mylast.utils
 
+import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 import retrofit2.http.Query
 import tn.esprit.mylast.models.User
 
 interface ApiInterface {
 
-    @POST("login")
-    fun login(@Query("email") email: String, @Query("password") password: String): Call<User>
-    @POST("register")
-    fun register(@Query("name") name: String,@Query("email") email: String, @Query("password") password: String): Call<User>
+    @POST("users/login")
+    @FormUrlEncoded
+    fun login(
+        @Field("email")email:String,
+        @Field("password")password:String
+    ):Call<User>
+    @POST("users/register") //methode 2
+    @FormUrlEncoded
+    fun register(@Field("name")name:String,
+                 @Field("email")email:String,
+                 @Field("password")password:String
+    ):Call<User>
 
     companion object {
 
@@ -28,4 +39,26 @@ interface ApiInterface {
             return retrofit.create(ApiInterface::class.java)
         }
     }
+
+
+
+
+
+  /*  @POST("register") //methode 2
+    @FormUrlEncoded
+    fun register(@Field("name")name:String,
+                 @Field("email")email:String,
+                 @Field("password")password:String
+                 ):Observable<String>
+    @POST("login")
+    @FormUrlEncoded
+    fun login(
+                 @Field("email")email:String,
+                 @Field("password")password:String
+                 ):Observable<String>*/
+
+
+
+
+
 }
