@@ -149,9 +149,10 @@ class RegisterActivity : AppCompatActivity() {
 
                  val user = response.body()
 
-                 if (user == null){
+                 if (user!=null){
                      Toast.makeText(this@RegisterActivity, "Registration Success", Toast.LENGTH_SHORT).show()
                      startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+
                  }else{
                      Toast.makeText(this@RegisterActivity, "User already has an account", Toast.LENGTH_SHORT).show()
                  }
