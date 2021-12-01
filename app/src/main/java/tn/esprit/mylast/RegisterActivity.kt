@@ -9,21 +9,22 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import android.content.SharedPreferences
-import android.graphics.Insets.add
-import android.view.View
-import android.view.WindowManager
-import androidx.core.graphics.Insets.add
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import tn.esprit.mylast.models.User
+import tn.esprit.mylast.utils.ApiInterface
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.internal.util.BackpressureHelper.add
 import io.reactivex.schedulers.Schedulers
+import android.graphics.Insets.add
+import android.view.View
+import android.view.WindowManager
+import androidx.core.graphics.Insets.add
 
-import tn.esprit.mylast.models.User
-import tn.esprit.mylast.utils.ApiInterface
 import tn.esprit.mylast.utils.RetrofitClient
 
 const val PREF_NAME = "LOGIN_PREF_AFFARIET"
