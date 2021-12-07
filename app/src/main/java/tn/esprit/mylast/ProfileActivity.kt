@@ -4,9 +4,6 @@ import android.content.DialogInterface.OnClickListener
 import tn.esprit.mylast.R
 import android.net.Uri
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.content.SharedPreferences
@@ -14,8 +11,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuView
 import androidx.appcompat.view.menu.MenuView.*
@@ -41,28 +37,39 @@ class ProfileActivity : AppCompatActivity() {
         val email = sharedPref.getString("Email","")
         val username = findViewById<TextView>(R.id.username)
         username.text = name
+        val stng = findViewById<FrameLayout>(R.id.settingBytton)
+
         val usermail = findViewById<TextView>(R.id.usermail)
         usermail.text = email
 
 
-          // val intent = Intent(this, MainActivity::class.java)
+        // val intent = Intent(this, MainActivity::class.java)
 
-         //  startActivity(intent)
+        //  startActivity(intent)
 
         picture.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             intent.type = "image/*"
             startActivityForResult(intent, 3) }
 
+        stng.setOnClickListener {
+            val intent = Intent(this,Setting::class.java)
+            startActivity(intent)
+        }
+
 
         btnhome.setOnClickListener{navigate() }
 
+        backBytton.setOnClickListener {
+            onBackPressed()
+        }
 
-        
+
+
     }
-   private fun navigate(){
+    private fun navigate(){
         val intent = Intent(this, MainActivity::class.java)
-      // intent.putExtra("Image", uri.toString())
+        // intent.putExtra("Image", uri.toString())
         println("image : " + uri)
         startActivity(intent)
 
@@ -74,26 +81,26 @@ class ProfileActivity : AppCompatActivity() {
 
 
 
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-    super.onActivityResult(requestCode, resultCode, data)
-    if (resultCode == RESULT_OK && data != null) {
-        val selectedImage: Uri? = data.data
-        val imageView = findViewById<ImageView>(R.id.imageView5)
-        imageView.setImageURI(selectedImage)
-        uri = selectedImage
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && data != null) {
+            val selectedImage: Uri? = data.data
+            val imageView = findViewById<ImageView>(R.id.imageView5)
+            imageView.setImageURI(selectedImage)
+            uri = selectedImage
 
-         sharedPref.edit().putString("image",uri.toString()).apply()
-        Log.i("image",uri.toString())
+            sharedPref.edit().putString("image",uri.toString()).apply()
+            Log.i("image",uri.toString())
 
-    } else {
+        } else {
 
 
-        Toast.makeText(applicationContext, "You haven't picked Image", Toast.LENGTH_LONG)
-            .show();
+            Toast.makeText(applicationContext, "You haven't picked Image", Toast.LENGTH_LONG)
+                .show();
 
+        }
     }
-}
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.mainmenu, menu)
         return super.onCreateOptionsMenu(menu)

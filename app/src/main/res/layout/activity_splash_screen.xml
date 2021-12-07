@@ -7,17 +7,25 @@
     android:background="@drawable/gradiant_splash"
     tools:context=".SplashScreenActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="130dp"
-        android:layout_marginEnd="130dp"
-        android:foregroundGravity="center"
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="165dp"
+        android:layout_height="169dp"
+        app:cardCornerRadius="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo"
-        tools:ignore="ImageContrastCheck" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foregroundGravity="center"
+            app:srcCompat="@drawable/logo"
+            tools:ignore="ImageContrastCheck" />
+
+    </androidx.cardview.widget.CardView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

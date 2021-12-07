@@ -25,10 +25,19 @@ interface ApiInterface {
                  @Field("password")password:String
     ):Call<User>
 
+    @POST("users/update/id") //methode 2
+    @FormUrlEncoded
+    fun update(@Field("name")name:String,
+                 @Field("email")email:String,
+               @Field("picture")picture:String,
+                 @Field("password")password:String
+    ):Call<User>
+
+
     companion object {
 
         var BASE_URL = "http://10.0.2.2:3000/"
-
+       // var BASE_URL ="http://192.168.1.100:3000/"
         fun create() : ApiInterface {
 
             val retrofit = Retrofit.Builder()

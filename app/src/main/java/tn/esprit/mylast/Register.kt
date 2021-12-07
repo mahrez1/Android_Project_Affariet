@@ -1,4 +1,5 @@
 package tn.esprit.mylast
+import android.Manifest
 import tn.esprit.mylast.R
 
 import android.net.Uri
@@ -18,6 +19,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 
 import org.w3c.dom.Text
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
+
+import androidx.core.app.ActivityCompat
+
+import android.content.pm.PackageManager
+
+import androidx.core.content.ContextCompat
+
+import android.os.Build
+import android.content.DialogInterface
+
+
+
+
+
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,7 +59,7 @@ class Result : Fragment() {
     private var name_string: String? = null
 
     private var mail_string: String? = null
- //   private var pic_string: String? = null
+    //   private var pic_string: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,12 +69,12 @@ class Result : Fragment() {
             name_string = it.getString(ARG_NAME)
 
             mail_string = it.getString(ARG_EMAIL)
-        //  pic_string = it.getString(ARG_PIC)
+            //  pic_string = it.getString(ARG_PIC)
 
 
-           // val img= intent.getStringExtra("Image")
-           // val fileUri = Uri.parse(img)
-           // picture.setImageURI(fileUri)
+            // val img= intent.getStringExtra("Image")
+            // val fileUri = Uri.parse(img)
+            // picture.setImageURI(fileUri)
 
 
 
@@ -71,11 +90,11 @@ class Result : Fragment() {
 
         val v = inflater.inflate(R.layout.nav_header_main, container, false)
         // Inflate the layout for this fragment
-      // val picture = v.findViewById<ImageView>(R.id.pic)
-       /* var picture = v.findViewById<ImageView>(R.id.pic)
-        val extras = getIntent().extras
-        val path: Uri = extras?.get("Image") as Uri
-       val p= picture.setImageURI(path) */
+        // val picture = v.findViewById<ImageView>(R.id.pic)
+        /* var picture = v.findViewById<ImageView>(R.id.pic)
+         val extras = getIntent().extras
+         val path: Uri = extras?.get("Image") as Uri
+        val p= picture.setImageURI(path) */
 
         val nameText = v.findViewById<TextView>(R.id.usernamep)
         val emailText = v.findViewById<TextView>(R.id.usermailp)
@@ -86,8 +105,11 @@ class Result : Fragment() {
         //if(sharedPreff!=null){ }
         //else{ pic.setImageResource(v.findViewById<TmageView>(R.id.pic))}
         //toString()!!.toUri())
+        if (checkPermissionREAD_EXTERNAL_STORAGE(requireContext())) {
+            pic.setImageURI(sharedPreff.getString("image","")!!.toUri())
+        }
 
-        pic.setImageURI(sharedPreff.getString("image","")!!.toUri())
+
 
 
 
@@ -99,20 +121,74 @@ class Result : Fragment() {
             name_string = requireArguments().getString(ARG_NAME)
 
             mail_string = requireArguments().getString(ARG_EMAIL)
-         //  pic_string = requireArguments().getString(ARG_PIC)
+            //  pic_string = requireArguments().getString(ARG_PIC)
 
         }
         nameText.text = "${name_string}"
 
         emailText.text = "${mail_string}"
-       //= "${pic_string}"
+        //= "${pic_string}"
 
 
 
         return v
 
     }
+    val MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123
 
+    fun checkPermissionREAD_EXTERNAL_STORAGE(
+        context: Context
+    ): Boolean {
+        val currentAPIVersion = Build.VERSION.SDK_INT
+        return if (currentAPIVersion >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        (context as Activity?)!!,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                ) {
+                    showDialog(
+                        "External storage", context,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                } else {
+                    ActivityCompat
+                        .requestPermissions(
+                            (context as Activity?)!!,
+                            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE
+                        )
+                }
+                false
+            } else {
+                true
+            }
+        } else {
+            true
+        }
+    }
+    fun showDialog(
+        msg: String, context: Context?,
+        permission: String
+    ) {
+        val alertBuilder: AlertDialog.Builder = AlertDialog.Builder(context)
+        alertBuilder.setCancelable(true)
+        alertBuilder.setTitle("Permission necessary")
+        alertBuilder.setMessage("$msg permission is necessary")
+        alertBuilder.setPositiveButton(android.R.string.yes,
+            DialogInterface.OnClickListener { dialog, which ->
+                ActivityCompat.requestPermissions(
+                    (context as Activity?)!!, arrayOf(permission),
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE
+                )
+            })
+        val alert: AlertDialog = alertBuilder.create()
+        alert.show()
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -127,7 +203,7 @@ class Result : Fragment() {
         fun newInstance(
             param1: String?,
             param2: String?
-          //  param3: String?
+            //  param3: String?
 
 
         ) = Result().apply {
@@ -135,7 +211,7 @@ class Result : Fragment() {
             arguments = Bundle().apply {
                 putString(ARG_NAME, param1)
                 putString(ARG_EMAIL, param2)
-              //  putString( ARG_PIC, param3)
+                //  putString( ARG_PIC, param3)
 
             }
         }
