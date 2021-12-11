@@ -4,10 +4,7 @@ import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 import tn.esprit.mylast.models.User
 
 interface ApiInterface {
@@ -25,12 +22,18 @@ interface ApiInterface {
                  @Field("password")password:String
     ):Call<User>
 
-    @POST("users/update/id") //methode 2
+    @PUT("users/update/picture/{id}") //methode 2
     @FormUrlEncoded
-    fun update(@Field("name")name:String,
-                 @Field("email")email:String,
-               @Field("picture")picture:String,
-                 @Field("password")password:String
+    fun updatePicture(@Path("id") id: String?,
+                      @Field("picture")picture:String
+
+    ):Call<User>
+    @PUT("users/update/picture/{id}")
+    @FormUrlEncoded
+    fun updateUser(@Path("id") id: String?,
+                   @Field("name")name:String,
+                   @Field("email")email:String
+
     ):Call<User>
 
 

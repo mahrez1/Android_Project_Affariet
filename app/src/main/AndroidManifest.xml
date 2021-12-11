@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyLast" >
         <activity
+            android:name=".utils.DetailActivity"
+            android:exported="true" />
+        <activity
             android:name=".ManageAccoount"
             android:exported="true"
             android:theme="@style/Theme.MyLast.NoActionBar"

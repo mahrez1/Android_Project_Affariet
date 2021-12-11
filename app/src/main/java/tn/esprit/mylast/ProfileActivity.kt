@@ -16,6 +16,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuView
 import androidx.appcompat.view.menu.MenuView.*
 import kotlinx.android.synthetic.main.activity_profile.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import tn.esprit.mylast.models.User
+import tn.esprit.mylast.utils.ApiInterface
 import kotlin.Result
 import androidx.appcompat.view.menu.MenuView.ItemView as ItemView1
 
@@ -58,7 +63,8 @@ class ProfileActivity : AppCompatActivity() {
         }
 
 
-        btnhome.setOnClickListener{navigate() }
+        btnhome.setOnClickListener{ doUpdatePicture()
+            navigate() }
 
         backBytton.setOnClickListener {
             onBackPressed()
@@ -127,6 +133,49 @@ class ProfileActivity : AppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
+
+
+
+    private fun doUpdatePicture(){
+
+        val apiInterface = ApiInterface.create()
+
+
+        apiInterface.updatePicture(uri.toString().trim(),"picture").enqueue(object :
+            Callback<User> {
+
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+
+
+                    Toast.makeText(this@ProfileActivity, "update Success", Toast.LENGTH_SHORT).show()
+
+
+
+
+
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Toast.makeText(this@ProfileActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
+
+
+            }
+
+        })
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
