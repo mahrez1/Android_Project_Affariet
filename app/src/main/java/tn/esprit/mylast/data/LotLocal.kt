@@ -7,7 +7,7 @@ const val CATEGORIE = "CATEGORIE"
 const val DESCRIPTION = "DESCRIPTION"
 
 data class Terrain (
-       val terrainPic: Int,
+       val terrainPic: String,
        val categorie: String,
        val description: String
 

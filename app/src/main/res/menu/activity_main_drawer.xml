@@ -10,17 +10,12 @@
             android:title="ACCUEIL" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_baseline_attach_money_24"
-            android:title="ACHETER" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_baseline_maps_home_work_24"
-            android:title="ALLOUER" />
-
-        <item
-            android:id="@+id/postuler"
             android:icon="@drawable/ic_baseline_post_add_24"
             android:title="POSTULER" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_baseline_search_24"
+            android:title="FILTRER" />
 
         <item
             android:id="@+id/pannier"

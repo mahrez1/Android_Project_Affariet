@@ -1,5 +1,4 @@
 package tn.esprit.mylast
-
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
@@ -32,6 +31,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.nav_header_main)
+        setContentView(R.layout.fragment_home)
+        setContentView(R.layout.terrain_single_item)
+//        setContentView(R.layout.fragment_gallery)
+
+
 
         //  val intent = intent
         // val img = intent.getStringExtra("Image")

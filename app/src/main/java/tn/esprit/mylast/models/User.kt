@@ -1,7 +1,7 @@
 package tn.esprit.mylast.models
 
 data class User (
-    var id: Int,
+    var _id: String,
     var name: String,
     var email: String,
     var picture: String,

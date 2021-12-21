@@ -2,6 +2,7 @@ package tn.esprit.mylast
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import tn.esprit.mylast.R
@@ -10,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_register.*
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.inputmethod.InputBinding
 import android.widget.Button
@@ -25,11 +27,13 @@ import tn.esprit.mylast.MainActivity
 import tn.esprit.mylast.models.User
 import tn.esprit.mylast.utils.ApiInterface
 import tn.esprit.mylast.utils.RetrofitClient
+const val PREF_NAMEE = "LOGIN_PREF_AFFARIETT"
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var Button : Button
     private lateinit var email_et :EditText
     private lateinit var password_et :EditText
+    lateinit  var SharedPref  : SharedPreferences
    // lateinit  var iMyService  : ApiInterface
    // internal var compositeDisposable = CompositeDisposable()
     /*override fun onStop()
@@ -45,7 +49,6 @@ class LoginActivity : AppCompatActivity() {
 
         password_et  = findViewById(R.id.password)
         email_et = findViewById(R.id.email)
-
         Button.setOnClickListener{
 
             val email = email_et.text.toString().trim()
@@ -76,6 +79,7 @@ class LoginActivity : AppCompatActivity() {
            else{
               // startActivity(Intent(this,LoginActivity::class.java))
                dologin()
+
 
 
             }
@@ -124,7 +128,31 @@ class LoginActivity : AppCompatActivity() {
                 if (user != null)
                 {
                     Toast.makeText(this@LoginActivity, "Login Success", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+
+                    //startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                   // SharedPref.edit().apply{
+                   //     putString(ID,user.id)
+                       /* putString(USERNAME, user.username)
+                        putString(PASSWORD, user.password)
+                        putString(EMAIL, user.email)
+                        putString(PICTURE, user.picture)
+                        putString(FOLLOWERS,user.followers.size.toString())
+                        putString(NBPOST,user.posts.size.toString())
+                        putString(FOLLOWING,user.following.size.toString())*/
+                        //putStringSet(FOLLOWERSARRAY,user.followers)
+                        //putBoolean(IS_REMEMBRED, false)
+                 //   }.apply()
+                    SharedPref = getSharedPreferences(PREF_NAMEE, MODE_PRIVATE)
+
+                    val editor : SharedPreferences.Editor = SharedPref.edit()
+                    editor.putString("ID" , user._id)
+                    editor.putString("EMAIL" , user.email)
+                    editor.apply()
+                    Log.i("hhhkkk", user._id)
+
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
                 else
                 {

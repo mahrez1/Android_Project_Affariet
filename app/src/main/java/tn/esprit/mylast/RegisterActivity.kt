@@ -56,7 +56,7 @@ class RegisterActivity : AppCompatActivity() {
             val username = username_et.text.toString().trim()
             val email = email_et.text.toString().trim()
             val password = password_et.text.toString().trim()
-            mSharedPref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+            mSharedPref = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
 
 
             if (username.isEmpty()){
