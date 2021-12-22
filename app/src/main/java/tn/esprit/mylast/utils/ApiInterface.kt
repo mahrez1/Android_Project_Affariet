@@ -1,8 +1,6 @@
 package tn.esprit.mylast.utils
 
 import com.google.gson.annotations.SerializedName
-import io.reactivex.Flowable
-import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -12,11 +10,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import tn.esprit.mylast.models.Lot
 import tn.esprit.mylast.models.User
+import java.util.HashMap
 
 interface ApiInterface {
     data class SearchResponse(
         @SerializedName("lots")
-        val users: MutableList<Lot>
+        val users: MutableList<Lot>,
     )
     data class SearchBody(val localisation: String)
    // data class updateResponse(@SerializedName("user") val user: User)
@@ -60,7 +59,7 @@ interface ApiInterface {
 
         ):Call<User>
     @Multipart
-    @POST("users/lot/postuler") //methode 2
+    @POST("users/lot/postuler/oo") //methode 2
     fun addPost(
         @Part("localisation") localisation: String,
         @Part("description") description: String,
@@ -71,6 +70,15 @@ interface ApiInterface {
 
     @POST("users/lot/search/")
     fun search(@Body text: SearchBody): Call<SearchResponse>
+
+
+
+
+    @Multipart
+    @POST("users/lot/postuler")
+    fun upload(
+        @PartMap map: HashMap<String, RequestBody>,
+    ): Call<Lot>
 
    /* @Multipart
     @POST("posts/")

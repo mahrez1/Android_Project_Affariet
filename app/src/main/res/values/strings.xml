@@ -16,4 +16,8 @@
     <string name="title_activity_main3">MainActivity3</string>
     <string name="logoutTitle">Logout</string>
     <string name="logoutMessage">Are you sure you want to logout ?</string>
+    <string name="uploadImages">Set your image</string>
+    <string name="msg_loading">Loading...</string>
+
+
 </resources>

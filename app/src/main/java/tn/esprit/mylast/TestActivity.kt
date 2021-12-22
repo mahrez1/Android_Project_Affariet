@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import br.com.onimur.handlepathoz.HandlePathOz
 import br.com.onimur.handlepathoz.HandlePathOzListener
 import br.com.onimur.handlepathoz.model.PathOz
@@ -128,8 +129,12 @@ class TestActivity : AppCompatActivity() , HandlePathOzListener.SingleUri {
                 GALLERY_REQUEST_CODE -> {
                     //data.getData return the content URI for the selected Image
                     selectedImage = data?.data
+                    val h = selectedImage.toString()!!.replace("\\","/")
+                    val m = handlePathOz!!.getRealPath(h.toUri())
+                    //onRequestHandlePathOz(m,null)
 
-                    Log.i("m","aaaaaaaaaaaaaaaaa"+selectedImage.toString())
+
+                    Log.i("fuck","aaaaaaaaaaaaaaaaa"+m.toString())
 
                     if (selectedImage != null) {
                         handlePathOz!!.getRealPath(selectedImage)

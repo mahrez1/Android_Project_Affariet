@@ -80,6 +80,12 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:3.0.7"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'com.github.onimur:handle-path-oz:1.0.7'
+    implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
+    implementation 'pub.devrel:easypermissions:2.0.1'
+
+    implementation 'junit:junit:4.13.2'
+
+
 
     kapt "androidx.room:room-compiler:2.3.0"
 }
