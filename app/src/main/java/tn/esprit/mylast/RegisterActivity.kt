@@ -143,6 +143,7 @@ class RegisterActivity : AppCompatActivity() {
          val apiInterface = ApiInterface.create()
 
 
+
          apiInterface.register(username_et.text.toString().trim(),email_et.text.toString().trim() ,password_et.text.toString().trim()).enqueue(object :
              Callback<User> {
 
