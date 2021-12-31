@@ -77,8 +77,10 @@ interface ApiInterface {
     @Multipart
     @POST("users/lot/postuler")
     fun upload(
-        @PartMap map: HashMap<String, RequestBody>,
+        @PartMap map: HashMap<String, RequestBody>
     ): Call<Lot>
+
+
 
    /* @Multipart
     @POST("posts/")

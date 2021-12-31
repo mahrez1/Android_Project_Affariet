@@ -299,7 +299,7 @@ class ImageActivity : AppCompatActivity(), View.OnClickListener {
             // Parsing any Media type file
             val requestBody = RequestBody.create(MediaType.parse("*/*"), file)
             //badelha++++++++++++++++++++++++++++++++++++++++++++++++
-            map.put("path\"; picture=\"${file.name}\"", requestBody)
+            map.put("picture\"; picture=\"" + file.name + "\"", requestBody)
             val getResponse = ApiInterface.create()
             val call = getResponse.upload(map)
 
