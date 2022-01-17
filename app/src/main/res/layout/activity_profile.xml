@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/GrannySmithApple"
+
 
     tools:context=".ProfileActivity">
 
@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:background="@drawable/aa"
+
         android:layout_height="58dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,9 +43,7 @@
             android:gravity="center_horizontal"
             android:text="AFFARIET"
             android:textAllCaps="true"
-
             android:textColor="@color/black"
-
             android:textSize="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +94,7 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="177dp"
         android:text="Name :jdjf"
-        android:textColor="@color/colorPrimary"
+
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,7 +109,6 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="179dp"
         android:text="Email xx@ss.fr"
-        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
@@ -126,7 +123,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-
+        app:backgroundTint="@color/M_colorPrimary"
         app:layout_constraintVertical_bias="0.944" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

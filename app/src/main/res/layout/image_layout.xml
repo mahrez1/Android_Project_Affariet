@@ -2,6 +2,93 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="7.5"
+        android:orientation="vertical">
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Localisation"
+            android:textSize="10dp"
+            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/titlePost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:hint="write the localisation"
+            android:inputType="textMultiLine"
+            android:textColor="@color/M_colorBlack" />
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1.5"
+                android:textSize="10dp"
+
+                android:gravity="center_vertical"
+                android:text="Price" />
+
+            <EditText
+                android:id="@+id/pricePost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8.5"
+                android:hint="0.0"
+                android:inputType="numberDecimal"
+
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="Description"
+            android:textSize="10dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/descPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:hint="Whrite your description..."
+            android:inputType="textMultiLine" />
+
+
+
+
+
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/preview"
@@ -23,4 +110,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="upload" />
+    <Button
+        android:id="@+id/createPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="15dp"
+        android:text="ADD"
+        android:textColor="@color/M_colorWhite" />
+
 </LinearLayout>

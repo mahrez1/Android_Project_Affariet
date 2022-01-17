@@ -1,5 +1,6 @@
 package tn.esprit.mylast.ui.home
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -22,6 +24,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import tn.esprit.mylast.PREF_N
 import tn.esprit.mylast.R
 import tn.esprit.mylast.data.Terrain
 import tn.esprit.mylast.databinding.FragmentHomeBinding
@@ -36,6 +39,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
     lateinit var recylcerTerrainAdapter: LotAdapter
+    lateinit  var sharedPre  : SharedPreferences
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -76,11 +80,13 @@ class HomeFragment : Fragment() {
                    var post = arrayOfNulls<String>(postlist.size)
                    for(i in postlist.indices)
                         post[i] = postlist[i].description
-                   // Log.i("koko","ggggggg"+description)
+
+                    // Log.i("koko","ggggggg"+description)
 
                     //  val array= ArrayAdapter<String>(requireContext(),android.R.layout.simple_dropdown_item_1line,post)
                  //   array.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
-
+                  //  requireActivity().getSharedPreferences(PREF_N, AppCompatActivity.MODE_PRIVATE)
+                    //  val filename2 = postlist[i].image
 
 
                      recylcerTerrainAdapter = LotAdapter(postlist)

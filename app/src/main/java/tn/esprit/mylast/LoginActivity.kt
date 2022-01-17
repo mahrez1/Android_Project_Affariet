@@ -150,7 +150,7 @@ class LoginActivity : AppCompatActivity() {
                     editor.apply()
                     Log.i("hhhkkk", user._id)
 
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    val intent = Intent(this@LoginActivity, Setting::class.java)
                     startActivity(intent)
                     finish()
                 }

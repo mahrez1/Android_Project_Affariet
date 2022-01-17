@@ -42,24 +42,40 @@ import retrofit2.Response
 import tn.esprit.mylast.models.Lot
 import tn.esprit.mylast.utils.ApiInterface
 import android.content.ContentUris
+import android.content.SharedPreferences
+import android.widget.EditText
+import androidx.core.net.toUri
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 
 
 /**
  * Created by delaroy on 5/5/18.
  */
+const val PREF_N = "UPLOAD_PREF_AFFARIET"
 
-class ImageActivity : AppCompatActivity(), View.OnClickListener {
+class ImageActivity : AppCompatActivity() {
+    lateinit  var Shared  : SharedPreferences
+
     private lateinit var imageView: ImageView
     private lateinit var pickImage: Button
     private lateinit var upload: Button
+    private lateinit var Buttonf : Button
+    private lateinit var localisation_et : EditText
+    private lateinit var description_et : EditText
+    private lateinit var price_et : EditText
     private val mMediaUri: Uri? = null
+    private var selectedImageUri: Uri? = null
 
     private var fileUri: Uri? = null
 
     private var mediaPath: String? = null
 
     private val btnCapturePicture: Button? = null
-
+    lateinit var storage: FirebaseStorage
+    val formater = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+    val now = Date()
+    val fileName = formater.format(now)
     private var mImageFileLocation = ""
     private lateinit var pDialog: ProgressDialog
     private var postPath: String? = null
@@ -70,42 +86,120 @@ class ImageActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.image_layout)
+        Buttonf = findViewById(R.id.createPost)
+        localisation_et  = findViewById(R.id.titlePost)
+        description_et  = findViewById(R.id.descPost)
+        price_et = findViewById(R.id.pricePost)
 
         imageView = findViewById(R.id.preview) as ImageView
         pickImage = findViewById(R.id.pickImage) as Button
         upload = findViewById(R.id.upload) as Button
 
-        pickImage.setOnClickListener(this)
-        upload.setOnClickListener(this)
-        initDialog()
-    }
+        pickImage.setOnClickListener{
+            openGallery()
+        }
+       upload.setOnClickListener{
+           uploadImage()
+       }
+        Buttonf.setOnClickListener{
+            doUpload()
 
-    override fun onClick(v: View) {
+            val intent = Intent(this@ImageActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
-        when (v.id) {
-            R.id.pickImage -> MaterialDialog.Builder(this)
-                .title(R.string.uploadImages)
-                .items(R.array.uploadImages)
-                .itemsIds(R.array.itemIds)
-                .itemsCallback { dialog, view, which, text ->
-                    when (which) {
-                        0 -> {
-
-                            val galleryIntent = Intent(Intent.ACTION_PICK,
-                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                            startActivityForResult(galleryIntent, REQUEST_PICK_PHOTO)
-                        }
-                        1 -> captureImage()
-                        2 -> imageView.setImageResource(R.drawable.ic_launcher_background)
-                    }
+        //initDialog()
+    }//https://firebasestorage.googleapis.com/v0/b/my-last-fc686.appspot.com/o/uploads%2F++?alt=media
+    private fun uploadImage()
+    {
+        if (selectedImageUri == null) {
+            Toast.makeText(this@ImageActivity,"Please Select Picture", Toast.LENGTH_SHORT).show()
+        }
+        else
+        {
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Uploading Image ...")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
+            val storageReference = FirebaseStorage.getInstance().reference.child("uploads/$fileName")
+            storageReference.putFile(selectedImageUri!!).
+            addOnSuccessListener {
+                imageView!!.setImageURI(selectedImageUri)
+                if(progressDialog.isShowing)
+                {
+                    progressDialog.dismiss()
                 }
-                .show()
-            R.id.upload -> uploadFile()
+                Toast.makeText(this,"Successfuly uploaded", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener{
+                if(progressDialog.isShowing)
+                {
+                    progressDialog.dismiss()
+                }
+                Toast.makeText(this,"Sorry", Toast.LENGTH_SHORT).show()
+
+            }
+
+
+
+
+
+
+
+        }
 
     }
+
+    private fun doUpload()
+    {
+        val getResponse = ApiInterface.create()
+        val call = getResponse.upload(localisation_et.text.toString().trim(),description_et.text.toString().trim() ,price_et.text.toString().trim() ,fileName)
+
+        call.enqueue(object : Callback<Lot> {
+            override fun onResponse(call: Call<Lot>, response: Response<Lot>) {
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
+                        //  hidepDialog()
+                        // val serverResponse = response.body()
+                        Toast.makeText(applicationContext, "upload gone ok !", Toast.LENGTH_SHORT).show()
+                       /* Shared= getSharedPreferences(PREF_N, MODE_PRIVATE)
+                        Log.i("file",fileName.toString())
+
+                        val editor : SharedPreferences.Editor = Shared.edit()
+                        editor.putString("pic" , fileName.toString())
+                        editor.apply()*/
+
+                    }
+                } else {
+                    Toast.makeText(applicationContext, "problem uploading image", Toast.LENGTH_SHORT).show()
+
+                }
+            }
+
+            override fun onFailure(call: Call<Lot>, t: Throwable) {
+                //Log.v("Response gotten is", t.message)
+            }
+        })
+
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 100 && resultCode == RESULT_OK)
+        {
+            selectedImageUri = data?.data!!
+            imageView!!.setImageURI(selectedImageUri)
+        }
+    }
+    private fun openGallery() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent,100)
+    }
+
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK) {
@@ -118,9 +212,7 @@ class ImageActivity : AppCompatActivity(), View.OnClickListener {
                     val cursor = contentResolver.query(selectedImage!!, filePathColumn, null, null, null)
                     assert(cursor != null)
                     cursor!!.moveToFirst()
-                    val imageUri =
-                        ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                            cursor.getInt(0).toLong())
+                    val imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cursor.getInt(0).toLong())
 
                    val columnIndex = cursor.getColumnIndex(filePathColumn[0])
                    mediaPath = cursor.getString(columnIndex)
@@ -150,9 +242,9 @@ class ImageActivity : AppCompatActivity(), View.OnClickListener {
         } else if (resultCode != Activity.RESULT_CANCELED) {
             Toast.makeText(this, "Sorry, there was an error!", Toast.LENGTH_LONG).show()
         }
-    }
+    }*/
 
-    protected fun initDialog() {
+   /* protected fun initDialog() {
 
         pDialog = ProgressDialog(this)
         pDialog.setMessage(getString(R.string.msg_loading))
@@ -168,7 +260,7 @@ class ImageActivity : AppCompatActivity(), View.OnClickListener {
     protected fun hidepDialog() {
 
         if (pDialog.isShowing) pDialog.dismiss()
-    }
+    }*/
 
 
     /**
@@ -285,48 +377,7 @@ class ImageActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     // Uploading Image/Video
-    private fun uploadFile() {
-        if (postPath == null || postPath == "") {
-            Toast.makeText(this, "please select an image ", Toast.LENGTH_LONG).show()
-            return
-        } else {
-            showpDialog()
 
-            // Map is used to multipart the file using okhttp3.RequestBody
-            val map = HashMap<String, RequestBody>()
-            val file = File(postPath!!)
-
-            // Parsing any Media type file
-            val requestBody = RequestBody.create(MediaType.parse("*/*"), file)
-            //badelha++++++++++++++++++++++++++++++++++++++++++++++++
-            map.put("picture\"; picture=\"" + file.name + "\"", requestBody)
-            val getResponse = ApiInterface.create()
-            val call = getResponse.upload(map)
-
-            call.enqueue(object : Callback<Lot> {
-                override fun onResponse(call: Call<Lot>, response: Response<Lot>) {
-                    if (response.isSuccessful) {
-                        if (response.body() != null) {
-                          //  hidepDialog()
-                           // val serverResponse = response.body()
-                           Toast.makeText(applicationContext, "upload gone ok !", Toast.LENGTH_SHORT).show()
-
-                        }
-                    } else {
-                        hidepDialog()
-                        Toast.makeText(applicationContext, "problem uploading image", Toast.LENGTH_SHORT).show()
-                        Log.i("lll","aaaaaaaaaaaaaaaaa"+file.name)
-
-                    }
-                }
-
-                override fun onFailure(call: Call<Lot>, t: Throwable) {
-                    hidepDialog()
-                    //Log.v("Response gotten is", t.message)
-                }
-            })
-        }
-    }
 
     companion object {
         private val REQUEST_TAKE_PHOTO = 0

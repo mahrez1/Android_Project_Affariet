@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "907774733285",
+    "project_id": "my-last-fc686",
+    "storage_bucket": "my-last-fc686.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:907774733285:android:89bf7edf94ddf47d035d0c",
+        "android_client_info": {
+          "package_name": "tn.esprit.mylast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "907774733285-13gjllmdo71hqnuc45ae29dgce23kbta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-6OhvzODjJR_-INoZkGEr4pPaalxz1ao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "907774733285-13gjllmdo71hqnuc45ae29dgce23kbta.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

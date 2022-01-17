@@ -22,8 +22,7 @@ class MainActivity2 : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
         image = findViewById(R.id.image) as Button?
-        video = findViewById(R.id.video) as Button?
-        pdf = findViewById(R.id.pdf) as Button?
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED)
         {
             image!!.isEnabled = false
@@ -36,12 +35,10 @@ class MainActivity2 : AppCompatActivity(), View.OnClickListener {
                 0)
         } else {
             image!!.isEnabled = true
-            video!!.isEnabled = true
-            pdf!!.isEnabled = true
+
         }
         image!!.setOnClickListener(this)
-        video!!.setOnClickListener(this)
-        pdf!!.setOnClickListener(this)
+
     }
 
 

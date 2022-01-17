@@ -73,12 +73,15 @@ interface ApiInterface {
 
 
 
-
-    @Multipart
+    @FormUrlEncoded
     @POST("users/lot/postuler")
     fun upload(
-        @PartMap map: HashMap<String, RequestBody>
-    ): Call<Lot>
+        @Field("localisation") localisation: String,
+        @Field("price") price: String,
+        @Field("description") description: String,
+        @Field("picture") image: String
+
+        ): Call<Lot>
 
 
 

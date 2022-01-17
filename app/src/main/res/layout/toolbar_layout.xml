@@ -11,7 +11,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/aa"
+        android:background="@color/M_colorBlack"
 
         app:menu="@menu/mainmenu"
         app:navigationIcon="@drawable/ic_bars"

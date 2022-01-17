@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.Toolbar
-        android:background="@drawable/aa"
+        android:background="@color/M_colorBlack"
 
         android:id="@+id/app_bar2"
         android:layout_width="match_parent"

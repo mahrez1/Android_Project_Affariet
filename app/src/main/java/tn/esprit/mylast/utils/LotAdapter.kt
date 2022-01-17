@@ -2,65 +2,79 @@ package tn.esprit.mylast.utils
 
 
 
-import android.Manifest
-import android.app.Activity
+import android.app.PendingIntent.getActivity
 import android.content.Context
-import android.content.Intent
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import tn.esprit.mylast.R
 import com.bumptech.glide.Glide
 
-import com.bumptech.glide.request.RequestOptions
-
 
 import tn.esprit.mylast.models.Lot
-import android.graphics.BitmapFactory
 
-import android.graphics.Bitmap
-import android.provider.ContactsContract
 import android.provider.ContactsContract.CommonDataKinds.Website.URL
+import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.internal.bind.TypeAdapters
 import com.google.gson.internal.bind.TypeAdapters.URL
+import tn.esprit.mylast.PREF_N
+
 import java.net.URI
 import java.net.URLDecoder
 
 
+
 class LotAdapter (val TerrainList: MutableList<Lot>) : RecyclerView.Adapter<LotAdapter.TerrainViewHolder>(){
+
+  //  lateinit  var sharedPre  : SharedPreferences
+
     lateinit var mContext: Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TerrainViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.terrain_single_item, parent, false)
 
 
+
         return TerrainViewHolder(view)
 
     }
 
+
+
     override fun onBindViewHolder(holder: TerrainViewHolder, position: Int) {
       //  holder.dis.setText(TerrainList.get(position).description)
 
+        //val path =
+            //"https://firebasestorage.googleapis.com/v0/b/mini-projet-2e934.appspot.com/o/images%2F$filename2?alt=media"
+
+
          val name = TerrainList[position].localisation
        val role = TerrainList[position].description
-       // val im = TerrainList[position].image.toString()
+         val filename2 = TerrainList[position].image
+
+        // val im = TerrainList[position].image.toString()
        // holder.img.text = im
         holder.dis.text = role
         holder.cat.text = name
+
 
         // holder.terr_Pic.setImageResource(TerrainList[position].picture)
 
 
 //http://localhost:3000/
-       val  url = "http://192.168.124.80:3000/"+TerrainList[position].image!!.replace("\\","/")
-        println(url)
+       // var sharedPre : SharedPreferences = activity!!.getPreferences(Context.MODE_PRIVATE);
+
+
+        val path = "https://firebasestorage.googleapis.com/v0/b/my-last-fc686.appspot.com/o/uploads%2F+$filename2+?alt=media"
+
+        println(filename2)
         //val afterDecode: String = URLDecoder.decode(url, "UTF-8")
         Glide.with(holder.itemView)
-            .load(url)
+            .load(filename2)
             .into(holder.img)
 
       /*  TypeAdapters.URL(url).openStream().use { `is` ->
@@ -137,6 +151,7 @@ class LotAdapter (val TerrainList: MutableList<Lot>) : RecyclerView.Adapter<LotA
 
 
 class TerrainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
     //val terr_Pic: ImageView
     val cat : TextView
 

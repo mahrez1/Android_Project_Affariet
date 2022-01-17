@@ -17,10 +17,6 @@
             android:icon="@drawable/ic_baseline_search_24"
             android:title="FILTRER" />
 
-        <item
-            android:id="@+id/pannier"
-            android:icon="@drawable/ic_baseline_home_repair_service_24"
-            android:title="PANNIER" />
 
 
 

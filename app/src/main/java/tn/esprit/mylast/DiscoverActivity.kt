@@ -21,6 +21,8 @@ import tn.esprit.mylast.utils.ApiInterface
 class DiscoverActivity : AppCompatActivity() {
     lateinit var recylcerLots: RecyclerView
     lateinit var adapter: LotAdapter
+    lateinit  var sharedPree  : SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +59,11 @@ class DiscoverActivity : AppCompatActivity() {
                                     userList.add(it)
                                      Log.i("aa", userList.size.toString())
                                 }
+                                //  val filename2 = postlist[i].image
+                                sharedPree = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+
+                                val filename2 = sharedPree.getString("pic", "").toString()
+                                val path = "https://firebasestorage.googleapis.com/v0/b/my-last-fc686.appspot.com/o/uploads%2F+$filename2+?alt=media"
 
                                 adapter = LotAdapter(userList)
                               //  Log.i("img", ApiInterface.BASE_URL + preferences.getString("avatar", ""))
