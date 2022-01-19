@@ -1,10 +1,10 @@
 package tn.esprit.mylast.utils
 
-
-
 import android.app.PendingIntent.getActivity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,20 +13,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import tn.esprit.mylast.R
 import com.bumptech.glide.Glide
-
+import tn.esprit.mylast.data.PICTURE
 
 import tn.esprit.mylast.models.Lot
-
-import android.provider.ContactsContract.CommonDataKinds.Website.URL
-import androidx.appcompat.app.AppCompatActivity
-import com.google.gson.internal.bind.TypeAdapters
-import com.google.gson.internal.bind.TypeAdapters.URL
-import tn.esprit.mylast.PREF_N
-
-import java.net.URI
-import java.net.URLDecoder
-
-
+import tn.esprit.mylast.models.description
+import tn.esprit.mylast.models.localisation
+import tn.esprit.mylast.models.picture
 
 class LotAdapter (val TerrainList: MutableList<Lot>) : RecyclerView.Adapter<LotAdapter.TerrainViewHolder>(){
 
@@ -69,13 +61,28 @@ class LotAdapter (val TerrainList: MutableList<Lot>) : RecyclerView.Adapter<LotA
        // var sharedPre : SharedPreferences = activity!!.getPreferences(Context.MODE_PRIVATE);
 
 
-        val path = "https://firebasestorage.googleapis.com/v0/b/my-last-fc686.appspot.com/o/uploads%2F+$filename2+?alt=media"
-
-        println(filename2)
+       // val path="https://firebasestorage.googleapis.com/v0/b/my-last-fc686.appspot.com/o/uploads%2F+$filename2+?alt=media"
+        val p="https://firebasestorage.googleapis.com/v0/b/my-last-fc686.appspot.com/o/uploads%2F$filename2?alt=media"
+        Log.i("ekhdem","ggggggg"+filename2)
+        println(p)
         //val afterDecode: String = URLDecoder.decode(url, "UTF-8")
         Glide.with(holder.itemView)
-            .load(filename2)
+            .load(p)
             .into(holder.img)
+
+
+
+        holder.itemView.setOnClickListener{
+            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+            intent.apply {
+                putExtra(picture, p)
+
+                putExtra(localisation, name)
+                putExtra(description, role)
+
+            }
+            holder.itemView.context.startActivity(intent)
+        }
 
       /*  TypeAdapters.URL(url).openStream().use { `is` ->
             val bitmap = BitmapFactory.decodeStream(`is`)

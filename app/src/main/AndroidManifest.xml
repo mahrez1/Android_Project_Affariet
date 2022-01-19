@@ -66,10 +66,7 @@
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar" >
         </activity>
-        <activity
-            android:name=".TestActivity"
-            android:exported="true" >
-        </activity>
+
         <activity
             android:name=".ImageActivity"
             android:exported="true" >

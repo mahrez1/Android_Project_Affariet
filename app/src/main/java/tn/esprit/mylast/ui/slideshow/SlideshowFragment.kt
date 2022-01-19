@@ -30,14 +30,15 @@ class SlideshowFragment : Fragment() {
     lateinit var recylcerLots: RecyclerView
     lateinit var adapter: LotAdapter
     lateinit  var sharedPree  : SharedPreferences
+
     private lateinit var slideshowViewModel: SlideshowViewModel
     private var _binding: FragmentSlideshowBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-  //  private val binding get() = _binding!!
+    private val binding get() = _binding!!
 
-   /* override fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,23 +49,18 @@ class SlideshowFragment : Fragment() {
         _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSlideshow
         slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
         })
         return root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }*/
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requireActivity().setContentView(R.layout.fragment_slideshow)
-        var userList: MutableList<Lot> = ArrayList()
-        recylcerLots = lotsRecyclerView as RecyclerView
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+
+       // setContentView(R.layout.activity_discover)
+        var userList: MutableList<Lot> = ArrayList()
+        recylcerLots = lotsRecyclerView
         goBack()
         val apiInterface = ApiInterface.create()
         simpleSearchView.setBackgroundResource(R.drawable.btndark)
@@ -136,6 +132,16 @@ class SlideshowFragment : Fragment() {
             }
 
         })
+
+
+
+    }
+
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
     fun goBack(){
         backButtonWraperDiscover.setOnClickListener {

@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import android.view.LayoutInflater
+import tn.esprit.mylast.utils.DetailActivity
 
 class MainActivity : AppCompatActivity() {
     lateinit  var sharedPreff  : SharedPreferences
@@ -98,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
     private fun navigate(){
-        val mainIntent = Intent(this, ProfileActivity::class.java)
+        val mainIntent = Intent(this, DetailActivity::class.java)
         startActivity(mainIntent)
     }
 

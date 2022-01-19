@@ -10,6 +10,9 @@ import com.google.gson.annotations.SerializedName
     var picture: String
 
 )*/
+const val picture = "picture"
+const val localisation = "localisation"
+const val description = "description"
 
 
 class Lot {
