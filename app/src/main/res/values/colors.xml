@@ -7,7 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorAccent">#80FFC4</color>
     <color name="a">#5FA37B </color>
     <color name="colorPrimary">#49B692</color>
     <color name="colorPrimaryDark">#008564</color>
@@ -18,6 +17,7 @@
     <color name="setting">#3A606E</color>
 
 
+    <color name="colorAccent">#D81B60</color>
 
 
    <!-- <color name="colorPrimary" tools:ignore="DuplicateDefinition">#6200EE</color>

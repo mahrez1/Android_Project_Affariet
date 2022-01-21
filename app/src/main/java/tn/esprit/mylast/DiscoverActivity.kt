@@ -19,90 +19,13 @@ import retrofit2.Response
 import tn.esprit.mylast.utils.ApiInterface
 
 class DiscoverActivity : AppCompatActivity() {
-    lateinit var recylcerLots: RecyclerView
-    lateinit var adapter: LotAdapter
-    lateinit  var sharedPree  : SharedPreferences
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discover)
-        var userList: MutableList<Lot> = ArrayList()
-        recylcerLots = lotsRecyclerView
-        goBack()
-        val apiInterface = ApiInterface.create()
-        simpleSearchView.setBackgroundResource(R.drawable.btndark)
-        simpleSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(newText: String): Boolean {
-                apiInterface.search(ApiInterface.SearchBody(newText)).enqueue(
-                    object : Callback<ApiInterface.SearchResponse> {
-                        override fun onResponse(
-                            call: Call<ApiInterface.SearchResponse>,
-                            response: Response<ApiInterface.SearchResponse>
-                        ) {
-                            userList.clear()
 
-                       //     val preferences: SharedPreferences = getSharedPreferences("pref", Context.MODE_PRIVATE)
-
-                        //    val userConnected =preferences.getString("id", "").toString()
-
-                            if(userList.size==0){
-                                noresulttext.visibility = View.VISIBLE
-
-                            }
-                            Log.i("recyler","aaaaaaaaaaaaaaaaa"+response.code()+response.body().toString())
-                            if (response.code() == 200) {
-                                recylcerLots.visibility = View.VISIBLE
-
-                                 response.body()!!.users.forEach {
-
-                                    userList.add(it)
-                                     Log.i("aa", userList.size.toString())
-                                }
-                                //  val filename2 = postlist[i].image
-                                sharedPree = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
-
-                                val filename2 = sharedPree.getString("pic", "").toString()
-                                val path = "https://firebasestorage.googleapis.com/v0/b/my-last-fc686.appspot.com/o/uploads%2F+$filename2+?alt=media"
-
-                                adapter = LotAdapter(userList)
-                              //  Log.i("img", ApiInterface.BASE_URL + preferences.getString("avatar", ""))
-                                recylcerLots.adapter = adapter
-                                recylcerLots.setLayoutManager( LinearLayoutManager(DiscoverActivity()))
-                                noresulttext.visibility = View.GONE
-                            } else {
-                                recylcerLots.visibility = View.GONE
-                                noresulttext.visibility = View.VISIBLE
-                                userList.clear()
-
-                            }
-                        }
-
-                        override fun onFailure(
-                            call: Call<ApiInterface.SearchResponse>,
-                            t: Throwable
-                        ) {
-                            recylcerLots.visibility = View.GONE
-                            noresulttext.visibility = View.VISIBLE
-                            userList.clear()
-
-                        }
-
-                    }
-                )
-                return false
-            }
-
-            override fun onQueryTextSubmit(query: String): Boolean {
-                // task HERE
-                return false
-            }
-
-        })
 }
-    fun goBack(){
-        backButtonWraperDiscover.setOnClickListener {
-            onBackPressed()
-        }
-    }
+
 }
