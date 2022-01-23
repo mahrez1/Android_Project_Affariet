@@ -40,9 +40,9 @@ import android.content.DialogInterface
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_NAME = "Name"
+private const val ARG_NAME = "NAME"
 
-private const val ARG_EMAIL = "Email"
+private const val ARG_EMAIL = "EMAIL"
 private const val ARG_PIC = "Pic"
 private var uri: Uri? = null
 

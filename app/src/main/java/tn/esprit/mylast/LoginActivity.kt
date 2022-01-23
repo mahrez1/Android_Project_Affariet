@@ -147,6 +147,7 @@ class LoginActivity : AppCompatActivity() {
                     val editor : SharedPreferences.Editor = SharedPref.edit()
                     editor.putString("ID" , user._id)
                     editor.putString("EMAIL" , user.email)
+                    editor.putString("NAME" , user.name)
                     editor.apply()
                     Log.i("hhhkkk", user._id)
 

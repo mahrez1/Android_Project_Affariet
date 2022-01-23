@@ -42,11 +42,11 @@ class MainActivity : AppCompatActivity() {
         // val img = intent.getStringExtra("Image")
         // val picBundle = Uri.parse(img).toString()
 
-        sharedPreff = getSharedPreferences(PREF_NAME, MODE_PRIVATE)
+        sharedPreff = getSharedPreferences(PREF_NAMEE, MODE_PRIVATE)
 
         val bundle = intent.getBundleExtra("bundle")
-        val nameBundle = sharedPreff.getString("Name","")
-        val emailBundle = sharedPreff.getString("Email","")
+        val nameBundle = sharedPreff.getString("NAME","")
+        val emailBundle = sharedPreff.getString("EMAIL","")
 
 
 

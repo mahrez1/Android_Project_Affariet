@@ -92,11 +92,11 @@ class RegisterActivity : AppCompatActivity() {
                 val name :String = username_et.text.toString()
                 val email :String  = email_et.text.toString()
                 val password :String  = password_et.text.toString()
-                val editor : SharedPreferences.Editor = mSharedPref.edit()
+              /*  val editor : SharedPreferences.Editor = mSharedPref.edit()
                 editor.putString("Name" , name)
                 editor.putString("Email" , email)
                 editor.putString("Password" , password)
-                editor.apply()
+                editor.apply()*/
                 Toast.makeText(this, "Information is saved", Toast.LENGTH_SHORT).show()
                 doRegister()
 
