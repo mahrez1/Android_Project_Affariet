@@ -8,7 +8,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import tn.esprit.mylast.LoginActivity
 import tn.esprit.mylast.MapsActivity
 import tn.esprit.mylast.R
@@ -37,8 +39,9 @@ class DetailActivity : AppCompatActivity() {
        val g = intent.getStringExtra(picture)
         Log.i("emchi","ggggggg"+g)
          val b =g?.toUri()
+        Picasso.with(applicationContext).load(b).into(terr_pic)
 
-        println(  terr_pic.setImageURI(b))
+
 
         val categorie = intent.getStringExtra(localisation)
         val description = intent.getStringExtra(description)
