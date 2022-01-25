@@ -25,6 +25,12 @@ interface ApiInterface {
    // @get:GET("lot/show/all/")
    // val posts : Call<MutableList<Lot>>
 
+    @GET("users/show/one/{id}") //methode 2
+    fun getOne(
+        @Path("id") id: String?
+
+    ):Call<User>
+
    @GET("users/lot/show/all/")
    fun get(): Call<MutableList<Lot?>?>?
 

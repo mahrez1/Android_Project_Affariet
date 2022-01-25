@@ -31,11 +31,18 @@ import androidx.core.content.ContextCompat
 
 import android.os.Build
 import android.content.DialogInterface
-
-
-
-
-
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.nav_header_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import tn.esprit.mylast.models.Lot
+import tn.esprit.mylast.models.User
+import tn.esprit.mylast.utils.ApiInterface
+import tn.esprit.mylast.utils.LotAdapter
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -60,6 +67,8 @@ class Result : Fragment() {
 
     private var mail_string: String? = null
     //   private var pic_string: String? = null
+    lateinit var recylcerTerrainAdapter: LotAdapter
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,7 +108,7 @@ class Result : Fragment() {
         val nameText = v.findViewById<TextView>(R.id.usernamep)
         val emailText = v.findViewById<TextView>(R.id.usermailp)
         var pic = v.findViewById<ImageView>(R.id.pic)
-        sharedPreff = requireActivity().getSharedPreferences(PREF_NAME, AppCompatActivity.MODE_PRIVATE)
+      /*  sharedPreff = requireActivity().getSharedPreferences(PREF_NAME, AppCompatActivity.MODE_PRIVATE)
         Log.i("imageaaaa","aaaaaaaaaaaa"+sharedPreff.getString("image",""))
 
         //if(sharedPreff!=null){ }
@@ -107,7 +116,7 @@ class Result : Fragment() {
         //toString()!!.toUri())
         if (checkPermissionREAD_EXTERNAL_STORAGE(requireContext())) {
             pic.setImageURI(sharedPreff.getString("image","")!!.toUri())
-        }
+        }*/
 
 
 
@@ -134,6 +143,60 @@ class Result : Fragment() {
         return v
 
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //  setContentView(R.layout.fragment_home)
+
+
+        val apiInterface = ApiInterface.create()
+        // var call = apiInterface.posts
+        sharedPreff = requireActivity().getSharedPreferences(PREF_NAMEE, AppCompatActivity.MODE_PRIVATE)
+
+        val sh=sharedPreff.getString("ID","")
+        apiInterface.getOne(id =sh ).enqueue(object : Callback<User> {
+            override fun onFailure(call: Call<User>, t: Throwable) { }
+            override fun onResponse(call : Call<User>, response : Response<User>)
+            {
+               val user = response.body()
+               val picc = user?.picture
+                val p="https://firebasestorage.googleapis.com/v0/b/my-last-fc686.appspot.com/o/uploads%2F$picc?alt=media"
+                println(p)
+                //val afterDecode: String = URLDecoder.decode(url, "UTF-8")
+                Log.i("jooo","ggggggg"+picc)
+
+                val u = p.toUri()
+                Picasso.with(requireActivity()).load(u).into(pic)
+
+
+
+
+            }
+
+
+
+        })
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     val MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123
 
     fun checkPermissionREAD_EXTERNAL_STORAGE(
