@@ -1,4 +1,5 @@
 package tn.esprit.mylast
+import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.DialogInterface.OnClickListener
 import tn.esprit.mylast.R
@@ -15,23 +16,43 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuView
 import androidx.appcompat.view.menu.MenuView.*
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.activity_splash_screen.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import tn.esprit.mylast.models.User
+import tn.esprit.mylast.utils.ApiInterface
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.Result
 import androidx.appcompat.view.menu.MenuView.ItemView as ItemView1
 
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var Buttonhome : Button
+    private lateinit var pickImage: Button
+
     private var uri: Uri? = null
     lateinit  var sharedPref  : SharedPreferences
+    val formater = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
+    val now = Date()
+    val fileName = formater.format(now)
+    private var selectedImageUri: Uri? = null
+    private lateinit var upload: Button
+    private lateinit var imageView: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         Buttonhome = findViewById(R.id.btnhome)
+        upload = findViewById(R.id.upload)
+        pickImage = findViewById(R.id.pickImage)
 
-        val picture = findViewById<ImageView>(R.id.imageView5)
+
+         imageView = findViewById(R.id.imageView5)
         sharedPref = getSharedPreferences(PREF_NAMEE, MODE_PRIVATE)
         val name = sharedPref.getString("NAME","")
         val email = sharedPref.getString("EMAIL","")
@@ -49,10 +70,12 @@ class ProfileActivity : AppCompatActivity() {
 
         //  startActivity(intent)
 
-        picture.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            intent.type = "image/*"
-            startActivityForResult(intent, 3) }
+        pickImage.setOnClickListener {
+            openGallery()
+        }
+        upload.setOnClickListener{
+            uploadImage()
+        }
 
         stng.setOnClickListener {
             val intent = Intent(this,Setting::class.java)
@@ -60,7 +83,9 @@ class ProfileActivity : AppCompatActivity() {
         }
 
 
-        btnhome.setOnClickListener{navigate() }
+        btnhome.setOnClickListener{navigate()
+            doUpdatePicture()
+        }
 
         backBytton.setOnClickListener {
             onBackPressed()
@@ -69,7 +94,41 @@ class ProfileActivity : AppCompatActivity() {
 
 
     }
-    private fun navigate(){
+
+    private fun uploadImage()
+    {
+        if (selectedImageUri == null) {
+            Toast.makeText(this@ProfileActivity,"Please Select Picture", Toast.LENGTH_SHORT).show()
+        }
+        else
+        {
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Uploading Image ...")
+            progressDialog.setCancelable(false)
+            progressDialog.show()
+            val storageReference = FirebaseStorage.getInstance().reference.child("uploads/$fileName")
+            storageReference.putFile(selectedImageUri!!).
+            addOnSuccessListener {
+                imageView!!.setImageURI(selectedImageUri)
+                if(progressDialog.isShowing)
+                {
+                    progressDialog.dismiss()
+                }
+                Toast.makeText(this,"Successfuly uploaded", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener{
+                if(progressDialog.isShowing)
+                {
+                    progressDialog.dismiss()
+                }
+                Toast.makeText(this,"Sorry", Toast.LENGTH_SHORT).show()
+
+            }
+
+        }}
+
+
+
+     fun navigate(){
         val intent = Intent(this, MainActivity::class.java)
         // intent.putExtra("Image", uri.toString())
         println("image : " + uri)
@@ -83,26 +142,20 @@ class ProfileActivity : AppCompatActivity() {
 
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && data != null) {
-            val selectedImage: Uri? = data.data
-            val imageView = findViewById<ImageView>(R.id.imageView5)
-            imageView.setImageURI(selectedImage)
-            uri = selectedImage
-
-            sharedPref.edit().putString("image",uri.toString()).apply()
-            Log.i("image",uri.toString())
-
-        } else {
-
-
-            Toast.makeText(applicationContext, "You haven't picked Image", Toast.LENGTH_LONG)
-                .show();
-
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
+            if(requestCode == 100 && resultCode == RESULT_OK)
+            {
+                selectedImageUri = data?.data!!
+                imageView.setImageURI(selectedImageUri)
+            }
         }
-    }
+    private fun openGallery() {
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(intent,100)
+        }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.mainmenu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -128,6 +181,37 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun doUpdatePicture(){
+
+        val apiInterface = ApiInterface.create()
+        sharedPref = getSharedPreferences(PREF_NAMEE,MODE_PRIVATE)
+        val sh=sharedPref.getString("ID","")
+
+        apiInterface.updatePicture(id =sh ,fileName).enqueue(object :
+            Callback<User> {
+
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+
+
+                Toast.makeText(this@ProfileActivity, "update Success", Toast.LENGTH_SHORT).show()
+
+
+
+
+
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Toast.makeText(this@ProfileActivity, "Connexion error!", Toast.LENGTH_SHORT).show()
+
+
+            }
+
+        })
+
+
     }
 
 }

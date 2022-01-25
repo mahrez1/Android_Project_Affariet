@@ -47,7 +47,7 @@ interface ApiInterface {
     @FormUrlEncoded
     fun updatePicture(
         @Path("id") id: String?,
-        @Field("picture") picture: String,
+        @Field("picture") picture: String
 
         ):Call<User>
     @PUT("users/update/{id}")
