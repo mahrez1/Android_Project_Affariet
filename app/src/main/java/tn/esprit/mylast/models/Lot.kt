@@ -13,6 +13,7 @@ import com.google.gson.annotations.SerializedName
 const val picture = "picture"
 const val localisation = "localisation"
 const val description = "description"
+const val contact = "contact"
 
 
 class Lot {

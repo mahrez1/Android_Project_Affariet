@@ -14,11 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tn.esprit.mylast.R
 import com.bumptech.glide.Glide
 import tn.esprit.mylast.data.PICTURE
-
-import tn.esprit.mylast.models.Lot
-import tn.esprit.mylast.models.description
-import tn.esprit.mylast.models.localisation
-import tn.esprit.mylast.models.picture
+import tn.esprit.mylast.models.*
 
 class LotAdapter (val TerrainList: MutableList<Lot>) : RecyclerView.Adapter<LotAdapter.TerrainViewHolder>(){
 
@@ -47,11 +43,13 @@ class LotAdapter (val TerrainList: MutableList<Lot>) : RecyclerView.Adapter<LotA
          val name = TerrainList[position].localisation
        val role = TerrainList[position].description
          val filename2 = TerrainList[position].image
+        val contac = TerrainList[position].contact
 
         // val im = TerrainList[position].image.toString()
        // holder.img.text = im
         holder.dis.text = role
         holder.cat.text = name
+        holder.con.text= contac
 
 
         // holder.terr_Pic.setImageResource(TerrainList[position].picture)
@@ -79,6 +77,7 @@ class LotAdapter (val TerrainList: MutableList<Lot>) : RecyclerView.Adapter<LotA
 
                 putExtra(localisation, name)
                 putExtra(description, role)
+                putExtra(contact, contac)
 
             }
             holder.itemView.context.startActivity(intent)
@@ -161,7 +160,7 @@ class TerrainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     //val terr_Pic: ImageView
     val cat : TextView
-
+    val con : TextView
    val view = itemView
     val dis: TextView
     val img: ImageView
@@ -171,5 +170,8 @@ class TerrainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
        cat = itemView.findViewById<TextView>(R.id.localisation)
         dis = itemView.findViewById(R.id.description)
         img = itemView.findViewById(R.id.terrainPic)
+        con = itemView.findViewById(R.id.conta)
+
+
     }
 }}

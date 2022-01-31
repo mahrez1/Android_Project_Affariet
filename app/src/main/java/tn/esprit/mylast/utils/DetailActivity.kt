@@ -17,6 +17,7 @@ import tn.esprit.mylast.R
 import tn.esprit.mylast.data.CATEGORIE
 import tn.esprit.mylast.data.DESCRIPTION
 import tn.esprit.mylast.data.PICTURE
+import tn.esprit.mylast.models.contact
 import tn.esprit.mylast.models.description
 import tn.esprit.mylast.models.localisation
 import tn.esprit.mylast.models.picture
@@ -26,6 +27,7 @@ class DetailActivity : AppCompatActivity() {
     lateinit var terr_cat : TextView
     lateinit var terr_desc: TextView
     lateinit var btn_map: Button
+    lateinit var terr_ct: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +38,9 @@ class DetailActivity : AppCompatActivity() {
         terr_pic = findViewById(R.id.terrainPic)
         terr_cat = findViewById(R.id.categorie)
         terr_desc = findViewById(R.id.description)
-       val g = intent.getStringExtra(picture)
+        terr_ct = findViewById(R.id.conn)
+
+        val g = intent.getStringExtra(picture)
         Log.i("emchi","ggggggg"+g)
          val b =g?.toUri()
         Picasso.with(applicationContext).load(b).into(terr_pic)
@@ -45,11 +49,13 @@ class DetailActivity : AppCompatActivity() {
 
         val categorie = intent.getStringExtra(localisation)
         val description = intent.getStringExtra(description)
+        val contact = intent.getStringExtra(contact)
 
         title= "$description Detail"
 
         terr_cat.text = "Localisation: $categorie"
         terr_desc.text = "Description : $description"
+        terr_ct.text = "Contact : $contact"
 
         btn_map.setOnClickListener {
             startActivity(Intent(this, MapsActivity::class.java)) }
