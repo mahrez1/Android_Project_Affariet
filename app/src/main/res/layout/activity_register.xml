@@ -121,7 +121,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
-                android:hint="Login"
+                android:hint="Email"
                 android:drawableStart="@drawable/ic_email"
                 android:layout_height="wrap_content"
                 />

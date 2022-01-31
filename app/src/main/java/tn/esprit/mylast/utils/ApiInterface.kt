@@ -83,8 +83,9 @@ interface ApiInterface {
     @POST("users/lot/postuler")
     fun upload(
         @Field("localisation") localisation: String,
-        @Field("price") price: String,
         @Field("description") description: String,
+        @Field("price") price: String,
+        @Field("contact") contact: String,
         @Field("picture") image: String
 
         ): Call<Lot>

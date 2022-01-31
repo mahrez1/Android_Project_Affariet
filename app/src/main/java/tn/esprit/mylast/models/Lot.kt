@@ -30,6 +30,9 @@ class Lot {
     @SerializedName("price")
     @Expose
     var price: String? = null
+    @SerializedName("contact")
+    @Expose
+    var contact: String? = null
     @SerializedName("picture")
     @Expose
     var image: String? = null
@@ -39,12 +42,14 @@ class Lot {
         localisation : String?,
         description: String?,
         price: String?,
+        contact: String?,
         image: String?,
     ) {
         this.id = id
         this.localisation = localisation
         this.description = description
-        this.price = description
+        this.price = price
+        this.contact = contact
         this.image = image
     }
 

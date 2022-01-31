@@ -64,6 +64,8 @@ class ImageActivity : AppCompatActivity() {
     private lateinit var localisation_et : EditText
     private lateinit var description_et : EditText
     private lateinit var price_et : EditText
+    private lateinit var contact_et : EditText
+
     private val mMediaUri: Uri? = null
     private var selectedImageUri: Uri? = null
 
@@ -90,6 +92,8 @@ class ImageActivity : AppCompatActivity() {
         localisation_et  = findViewById(R.id.titlePost)
         description_et  = findViewById(R.id.descPost)
         price_et = findViewById(R.id.pricePost)
+        contact_et = findViewById(R.id.contactPost)
+
 
         imageView = findViewById(R.id.preview) as ImageView
         pickImage = findViewById(R.id.pickImage) as Button
@@ -153,7 +157,7 @@ class ImageActivity : AppCompatActivity() {
     private fun doUpload()
     {
         val getResponse = ApiInterface.create()
-        val call = getResponse.upload(localisation_et.text.toString().trim(),description_et.text.toString().trim() ,price_et.text.toString().trim() ,fileName)
+        val call = getResponse.upload(localisation_et.text.toString().trim(),description_et.text.toString().trim() ,price_et.text.toString().trim() ,contact_et.text.toString().trim() ,fileName)
 
         call.enqueue(object : Callback<Lot> {
             override fun onResponse(call: Call<Lot>, response: Response<Lot>) {

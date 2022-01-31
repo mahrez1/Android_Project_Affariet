@@ -37,21 +37,7 @@ class ManageAccoount : AppCompatActivity() {
         var amine : Boolean = true
         var youssef : Boolean = true
 
-        upd_photo.setOnClickListener {
 
-            if (amine == true) {
-                update.visibility =View.VISIBLE
-                amine = false
-
-            }
-             else {
-                update.visibility =View.GONE
-                amine = true
-
-            }
-
-
-        }
 
         Upd_info.setOnClickListener {
 
